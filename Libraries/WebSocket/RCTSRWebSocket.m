@@ -329,10 +329,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
     CFRelease(_receivedHTTPHeaders);
     _receivedHTTPHeaders = NULL;
   }
-
-  if (_delegateDispatchQueue) {
-    _delegateDispatchQueue = NULL;
-  }
 }
 
 #ifndef NDEBUG
