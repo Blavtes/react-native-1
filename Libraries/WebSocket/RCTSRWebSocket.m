@@ -325,8 +325,6 @@ RCT_NOT_IMPLEMENTED(- (instancetype)init)
   [_inputStream close];
   [_outputStream close];
 
-  _workQueue = NULL;
-
   if (_receivedHTTPHeaders) {
     CFRelease(_receivedHTTPHeaders);
     _receivedHTTPHeaders = NULL;
