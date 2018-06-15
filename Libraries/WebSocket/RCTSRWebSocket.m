@@ -1453,13 +1453,18 @@ static const size_t RCTSRFrameHeaderOverhead = 32;
 
 - (void)_cleanupSelfReference:(NSTimer *)timer
 {
-  // Nuke NSStream delegate's
-  _inputStream.delegate = nil;
-  _outputStream.delegate = nil;
-  
   // Remove the streams, right now, from the networkRunLoop
   [_inputStream close];
   [_outputStream close];
+  
+  // Unschedule from RunLoop
+  for (NSArray *runLoop in [_scheduledRunloops copy]) {
+    [self unscheduleFromRunLoop:runLoop[0] forMode:runLoop[1]];
+  }
+  
+  // Nuke NSStream delegate's
+  _inputStream.delegate = nil;
+  _outputStream.delegate = nil;
   
   // Cleanup selfRetain in the same GCD queue as usual
   dispatch_async(_workQueue, ^{
